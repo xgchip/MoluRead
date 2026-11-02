@@ -85,21 +85,24 @@ if (! defined('__TYPECHO_ROOT_DIR__')) {
 <!-- 文章en -->
 <!-- 上一篇、下一篇 -->
 <?php if (! $this->is('page')): ?>
-<nav class="post-flow my-4" aria-label="文章导航">
-  <div class="post-flow-side post-flow-prev">
-    <span class="pf-dir"><span class="pf-chevron" aria-hidden="true"></span>上一篇</span>
-    <div class="pf-body">
-      <?php thePrev($this, '<span class="pf-empty">新故事即将开始</span>', $this->fields->articleType == 'image' ? true : false); ?>
-    </div>
-  </div>
-  <div class="post-flow-hub" aria-hidden="true"></div>
-  <div class="post-flow-side post-flow-next">
-    <span class="pf-dir">下一篇<span class="pf-chevron" aria-hidden="true"></span></span>
-    <div class="pf-body">
-      <?php theNext($this, '<span class="pf-empty">已是最后一篇</span>', $this->fields->articleType == 'image' ? true : false); ?>
-    </div>
-  </div>
+<nav class="mlr-post-navigation my-4" aria-label="文章导航">
+  <?php foreach (array('prev' => '上一篇', 'next' => '下一篇') as $direction => $label): ?>
+    <?php
+    $adjacent = getAdjacentPost($this, $direction, $this->fields->articleType == 'image');
+    $navTitle = $adjacent ? (string) $adjacent['title'] : ($direction === 'prev' ? '已是第一篇' : '已是最后一篇');
+    $navClass = 'mlr-post-nav-item mlr-post-nav-' . $direction . ($adjacent ? '' : ' is-empty');
+    ?>
+    <?php if ($adjacent): $adjacentPost = Helper::widgetById('Contents', $adjacent['cid']); ?>
+    <a class="<?php echo $navClass; ?>" href="<?php echo htmlspecialchars($adjacentPost->permalink, ENT_QUOTES, 'UTF-8'); ?>" rel="<?php echo $direction; ?>">
+    <?php else: ?>
+    <div class="<?php echo $navClass; ?>">
+    <?php endif; ?>
+      <span class="mlr-post-nav-label"><span class="mlr-post-nav-arrow" aria-hidden="true"><?php echo $direction === 'prev' ? '←' : '→'; ?></span><?php echo $label; ?></span>
+      <span class="mlr-post-nav-title"><?php echo htmlspecialchars($navTitle, ENT_QUOTES, 'UTF-8'); ?></span>
+    <?php if ($adjacent): ?></a><?php else: ?></div><?php endif; ?>
+  <?php endforeach; ?>
 </nav>
+
 <?php endif; ?>
 <!--文章评论-->
 <?php $this->need('components/comments.php'); ?>
