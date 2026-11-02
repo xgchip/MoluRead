@@ -22,8 +22,8 @@ require_once 'core/core.php';
  * 使用此方式在线更新主题的时候，func.php文件的内容将不会被覆盖（手动更新仍然会覆盖）
  * 当然需要注意php的代码规范，错误代码将会引起网站严重错误！
  */
-if (file_exists($options->themeFile('HarmonyHues', 'func.php')) || file_exists($options->themeFile('HarmonyHuesTheme', 'func.php'))) {
-    require_once 'func.php';
+if (is_file(__DIR__ . '/func.php')) {
+    require_once __DIR__ . '/func.php';
 }
 
 /**

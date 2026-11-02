@@ -32,7 +32,7 @@ function themeConfig($form)
     $favicon = new Typecho_Widget_Helper_Form_Element_Text(
         'favicon',
         NULL,
-        '/usr/themes/HarmonyHues/assets/images/favicon.webp',
+        getAssets('assets/images/favicon.webp', false),
         'favicon地址（必填）',
         '介绍：一般为http://www.yourblog.com/image.png,支持 https:// 或 //,留空则不设置favicon'
     );
@@ -44,7 +44,7 @@ function themeConfig($form)
     $logoUrl = new Typecho_Widget_Helper_Form_Element_Text(
         'logoUrl',
         NULL,
-        '/usr/themes/HarmonyHues/assets/images/logo.webp',
+        getAssets('assets/images/logo.webp', false),
         '站点日间模式的LOGO地址（必填）',
         '介绍：在这里填入一个日间模式的LOGO图片URL地址'
     );
@@ -396,9 +396,9 @@ function themeConfig($form)
     $swiperText = new Typecho_Widget_Helper_Form_Element_Textarea(
         'swiperText',
         NULL,
-        'HarmonyHues主题|欢迎使用HarmonyHues主题|2月29日 今日标题|https://www.biibii.cn/usr/themes/HarmonyHues/assets/images/themeImg.webp|https://www.biibii.cn/harmonyhues.html',
+        'MoluRead|欢迎使用 MoluRead|主题介绍|' . getAssets('assets/images/themeImg.webp', false) . '|https://github.com/xgchip/MoluRead',
         '首页顶部-轮播幻灯片内容（非必填）',
-        '介绍：在这里填入你的轮播幻灯片内容，格式：标题|描述|标签|图片URL或者MP4格式|链接URL（用|号隔开，内容没有的用NULL，内容一行一个，建议最多5个），例如：HarmonyHues主题|欢迎使用HarmonyHues主题|2月28日 今日标题|https://www.biibii.cn/usr/themes/HarmonyHues/assets/images/themeImg.webp|https://www.biibii.cn/harmonyhues.html'
+        '介绍：在这里填入你的轮播幻灯片内容，格式：标题|描述|标签|图片URL或者MP4格式|链接URL（用|号隔开，内容没有的用NULL，内容一行一个，建议最多5个），例如：MoluRead|欢迎使用主题|主题介绍|https://example.com/cover.webp|https://example.com/'
     );
     $form->addInput($swiperText);
     $swiperText->setAttribute('class', 'setting-content my-3');

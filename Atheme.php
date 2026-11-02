@@ -13,12 +13,12 @@ if (!defined('__TYPECHO_ROOT_DIR__')) {
 }
 
 $themeVersion = getVersion();
-$themeRepo    = 'https://github.com/wugeng20/HarmonyHuesTheme';
-$themeLog     = $themeRepo . '/blob/main/UpdateLog.md';
+$themeRepo    = 'https://github.com/xgchip/MoluRead';
+$themeLog     = $themeRepo . '/blob/main/CHANGELOG.md';
 
 $themeSpecs = array(
   array('icon' => 'icon-yuan', 'label' => '主题名称', 'value' => $this->title),
-  array('icon' => 'icon-zuozhe', 'label' => '主题作者', 'value' => '星语社长'),
+  array('icon' => 'icon-zuozhe', 'label' => '主题作者', 'value' => '半隐'),
   array('icon' => 'icon-shijian', 'label' => '主题版本', 'value' => 'v' . $themeVersion),
   array('icon' => 'icon-gensuixitong', 'label' => '博客程序', 'value' => 'Typecho'),
   array('icon' => 'icon-lianjie', 'label' => '技术栈', 'value' => 'PHP · HTML · CSS · JS'),

@@ -25,10 +25,10 @@
 
 ```bash
 cd /你的站点/usr/themes
-git clone https://github.com/xgchip/MoluRead.git HarmonyHues
+git clone https://github.com/xgchip/MoluRead.git MoluRead
 ```
 
-也可下载仓库 ZIP，解压后将文件夹改名为 **HarmonyHues**，放入 `usr/themes/`。保留此目录名是为兼容现有资源路径及主题设置，后台显示名称为 MoluRead。
+也可下载仓库 ZIP，解压后将文件夹改名为 **MoluRead**，放入 `usr/themes/`。主题目录名与后台显示名称统一为 MoluRead，资源路径按当前主题动态生成。
 
 进入 Typecho「控制台 → 外观」，启用主题后打开「设置外观」。首次安装请配置自己的 Logo、头像、站点信息和图片；收款码默认留空，请填写自己的图片地址。
 
@@ -54,3 +54,7 @@ git clone https://github.com/xgchip/MoluRead.git HarmonyHues
 本项目遵循上游标注的 **CC BY-NC-SA 4.0（署名—非商业性使用—相同方式共享）**，不以 MIT 重新许可，也不授予商业使用权。完整条款见 [LICENSE](LICENSE)；第三方组件仍适用各自许可。
 
 原作者：星语社长；二次开发：半隐。来源、基线提交与第三方说明见 [ATTRIBUTION.md](ATTRIBUTION.md)。原始介绍保留于 [上游 README](docs/upstream/HarmonyHues-README.md)。本项目公开源码，但其非商业限制不符合通常允许商用的开源定义。
+
+### 从旧目录升级
+
+旧版安装在 HarmonyHues 时，先备份站点及主题设置；直接改文件夹名会改变 Typecho 的设置键。需将原主题设置迁移至 theme:MoluRead，并将其中 /usr/themes/HarmonyHues/ 资源地址更新为 /usr/themes/MoluRead/，再切换活动主题。不要在后台直接启用新目录后覆盖已有配置。
