@@ -15,6 +15,7 @@ if (! defined('__TYPECHO_ROOT_DIR__')) {
 
 /* 公用函数 */
 require_once 'content-parse.php'; // 文章内容解析
+require_once 'navigation.php'; // Shared menu parser and renderer
 require_once 'function.php'; // 主题函数
 /* 主题函数 */
 require_once 'comment-config.php'; // 主题评论拦截

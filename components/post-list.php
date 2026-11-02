@@ -30,7 +30,7 @@ if (! function_exists('hasArticleTop')) {
     $db = Typecho_Db::get();
     $select = $db->fetchObject($db->select('COUNT(*) as count')
       ->from('table.fields')
-      ->where('name = ? && str_value = 1', 'articleTop')->limit(1));
+      ->where('name = ? AND str_value = 1', 'articleTop')->limit(1));
 
     $hasTop = ($select->count ?? 0) > 0; // 如果有置顶文章，返回true
 
@@ -72,7 +72,7 @@ if ($hasCustomQueue && ($this->is('index') || $this->is('front'))) {
   // 统一构造查询，保证列表与总数口径一致
   $buildPostQuery = function ($select) use ($db, $isArticleTop, $hiddenPostCidArray, $userId) {
     $query = $db->select($select)->from('table.contents')
-      ->where('table.contents.type = ? && table.contents.status = ? && table.contents.created < ?', 'post', 'publish', time());
+      ->where('table.contents.type = ? AND table.contents.status = ? AND table.contents.created < ?', 'post', 'publish', time());
 
     // 置顶的文章
     if (!empty($isArticleTop)) {
@@ -85,14 +85,14 @@ if ($hasCustomQueue && ($this->is('index') || $this->is('front'))) {
     }
 
     if ($userId) {
-      $query->orWhere('authorId = ? && status = ?', $userId, 'private');
+      $query->orWhere('authorId = ? AND status = ?', $userId, 'private');
     }
 
     return $query;
   };
 
   // 排序：置顶文章存在时优先置顶，其次按发布时间
-  $orderSql = !empty($isArticleTop) ? 'IF(table.fields.str_value = \'1\', 0, 1) ,table.contents.created' : 'table.contents.created';
+  $orderSql = !empty($isArticleTop) ? 'CASE WHEN table.fields.str_value = \'1\' THEN 0 ELSE 1 END ,table.contents.created' : 'table.contents.created';
 
   // 分页
   $normalPosts = $db->fetchAll($buildPostQuery('table.contents.*')->order($orderSql, Typecho_Db::SORT_DESC)->page($this->_currentPage, $adjustedPageSize));

@@ -134,16 +134,15 @@ function themeInit($self)
         '/golink' => 'golink.php',
     );
 
-    // PC端首页单栏模式布局的文章数量，不太友好，先注释掉
-    // if ($options->indexLayout && !isMobile() && $self->parameter->pageSize < 10) {
-    //     $self->parameter->pageSize += 3;
-    // }
-
-    // 手机文章数量
-    if (isMobile() && $self->parameter->pageSize % 2 != 0) {
-        $self->parameter->pageSize += 1;
+    // Set the size before Typecho runs its SELECT and computes page links.
+    // Never round mobile pages independently: that skips/repeats posts across devices.
+    if ($self->is('index') || $self->is('front')) {
+        $rawSize = trim((string) $options->homePageSize);
+        if ($rawSize !== '') {
+            $size = filter_var($rawSize, FILTER_VALIDATE_INT);
+            if ($size !== false && $size >= 1 && $size <= 48) $self->parameter->pageSize = $size;
+        }
     }
-
 
     // 获取当前请求路径
     $pathInfo = $self->request->getPathInfo();
@@ -789,54 +788,6 @@ function isSamePath($url1, $url2)
  * @param string $currentUrl 当前页面URL
  * @return string 导航栏HTML
  */
-function getCustomMenu($currentUrl = '')
-{
-    $navbarInfo = Helper::options()->navbarInfo;
-    if (empty($navbarInfo)) {
-        return '';
-    }
-
-    $cnavbarArray = json_decode('[' . trim($navbarInfo) . ']', true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        return '导航栏菜单 JSON 解析失败: ' . json_last_error_msg();
-    }
-
-    $navhtml = '';
-    foreach ($cnavbarArray as $item) {
-        $isActive = isSamePath($currentUrl, $item['link']);
-        if (! $isActive && isset($item['sub'])) {
-            foreach ($item['sub'] as $subItem) {
-                if (isSamePath($currentUrl, $subItem['link'])) {
-                    $isActive = true;
-                    break;
-                }
-            }
-        }
-
-        $navhtml .= '<li class="nav-item ' . ($item['class'] ?? '') . '">';
-        $navhtml .= '<a class="nav-a ' . ($isActive ? 'active' : '') . '" href="' . $item['link'] . '"
-    target="' . $item['target'] . '" title="' . $item['name'] . '">' . $item['name'] . (isset($item['sub'])
-            ? '<i class="iconfont nav-icon icon-xiala"></i>' :
-            '') . '</a>';
-
-        if (isset($item['sub']) && is_array($item['sub'])) {
-            $navhtml .= '<div class="pt-md-4 sub-menu">';
-            $navhtml .= '<ul class="d-md-flex flex-md-wrap p-md-2">';
-            foreach ($item['sub'] as $subItem) {
-                $subIsActive = isSamePath($currentUrl, $subItem['link']);
-                $navhtml .= '<li class="p-2 ' . ($subIsActive ? 'active' : '') . ' ' . ($subItem['class'] ?? '') . '"><a
-          href="' . $subItem['link'] . '" target="' . $subItem['target'] . '" title="' . $subItem['name'] . '">' .
-                    $subItem['name'] . '</a></li>';
-            }
-            $navhtml .= '</ul>
-  </div>';
-        }
-        $navhtml .= '</li>';
-    }
-
-    return $navhtml;
-}
-
 /**
  * 获取文章图片链接（支持单张或多张）
  *
@@ -855,9 +806,12 @@ function getPostCoverImage($archive)
     return '';
   }
   $raw = trim((string) $archive->fields->thumb);
-  if ($raw === '') {
-    return '';
+  // Prefer the explicit theme cover, then a compatible cover field, then the first body image.
+  if ($raw === '') $raw = trim((string) $archive->fields->cover);
+  if ($raw === '' && preg_match('/<img\b[^>]*\bsrc=["\']([^"\']+)["\']/i', (string) $archive->content, $image)) {
+    $raw = html_entity_decode($image[1], ENT_QUOTES, 'UTF-8');
   }
+  if ($raw === '') return '';
   $lines = preg_split('/\r\n|\r|\n/', $raw);
   return trim((string) ($lines[0] ?? ''));
 }
@@ -1257,7 +1211,7 @@ function getAdjacentPost($widget, $direction, $sameCategory = false)
         ->from('table.contents')
         ->where('table.contents.status = ?', 'publish')
         ->where('table.contents.type = ?', $widget->type)
-        ->where('table.contents.password IS NULL');
+        ->where('(table.contents.password IS NULL OR table.contents.password = ?)', '');
 
     // 限制同一分类（可选）
     if ($sameCategory && isset($widget->categories[0]['mid'])) {

@@ -20,26 +20,17 @@ if (! defined('__TYPECHO_ROOT_DIR__')) {
   <div class="card-body">
     <?php if (! $usePostCover): ?>
     <!-- 文章信息 -->
-    <div class="post-header mb-4">
-      <h1 class="h4 post-title font-weight-bold mb-4"><?php $this->title() ?></h1>
+    <header class="post-header hh-reading-header">
+      <h1 class="post-title"><?php $this->title(); ?></h1>
       <?php if (! $this->is('page')): ?>
-      <div class="meta d-flex align-items-center text-muted">
-        <div class="author-left">
-          <name class="d-inline-block mr-md-2"><i class="iconfont icon-zuozhe mr-1"></i><a
-              href="<?php $this->author->permalink(); ?>" title="由<?php $this->author(); ?>发布"
-              rel="author"><?php $this->author(); ?></a></name>
-          <time datetime="<?php $this->date('c'); ?>" class="d-inline-block" title="发布时间"><i
-              class="iconfont icon-shijian mr-1"></i><?php $this->date(); ?></time>
-        </div>
-        <div class="author-right ml-auto text-sm">
-          <a title="浏览量" role="button"><i class="iconfont icon-liulanjilu mr-1"></i><?php PostViewCount($this); ?></a>
-          <a class="mx-1" href="<?php $this->permalink() ?>#comments" title="评论" role="button"><i
-              class="iconfont icon-pinglun1 mr-1"></i><?php $this->commentsNum('0', '1', '%d'); ?></a>
-        </div>
+      <div class="hh-post-meta" aria-label="文章信息">
+        <a href="<?php $this->author->permalink(); ?>" rel="author"><i class="iconfont icon-zuozhe" aria-hidden="true"></i><?php $this->author(); ?></a>
+        <time datetime="<?php $this->date('c'); ?>"><i class="iconfont icon-shijian" aria-hidden="true"></i><?php $this->date('Y-m-d'); ?></time>
+        <span><i class="iconfont icon-liulanjilu" aria-hidden="true"></i><?php PostViewCount($this); ?> 阅读</span>
+        <a href="<?php $this->permalink(); ?>#comments"><i class="iconfont icon-pinglun1" aria-hidden="true"></i><?php $this->commentsNum('0', '1', '%d'); ?> 评论</a>
       </div>
       <?php endif; ?>
-      <div class="border-theme bg-primary"></div>
-    </div>
+    </header>
     <?php endif; ?>
     <!-- 文章内容 -->
     <div class="post-content markdown-body" itemprop="articleBody" view-image>
@@ -82,7 +73,7 @@ if (! defined('__TYPECHO_ROOT_DIR__')) {
         <div class="copyright-title">&#169版权申明</div>
         <p class="copyright-desc"><span class="ml-3"></span>- 本文由作者 <a href="<?php $this->author->permalink(); ?>"
             title="<?php $this->author(); ?>">@<?php $this->author(); ?></a>
-          原创发布在<?php $this->options->title(); ?>站点。未经许可，禁止转载。</p>
+          发布于<?php $this->options->title(); ?>站点。未经许可，禁止转载。</p>
       </div>
       <div class="copyright-svgname animated-signature svg-name">
         <?php $this->options->svgName(); ?>

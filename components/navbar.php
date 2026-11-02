@@ -25,6 +25,7 @@ if (! defined('__TYPECHO_ROOT_DIR__')) {
     </div>
     <nav class="d-none d-md-block nav-inner">
       <ul class="d-flex flex-column flex-md-row nav-menu m-0">
+        <?php if ((string) $this->options->navigationMode !== 'custom'): ?>
         <li class="nav-item">
           <a class="nav-a <?php echo $this->is('index') ? 'active' : '' ?>" href="<?php $this->options->siteUrl(); ?>"
             title="<?php $this->options->title(); ?>">首页</a>
@@ -95,7 +96,8 @@ if (! defined('__TYPECHO_ROOT_DIR__')) {
         <?php } // end foreach 
         ?>
 
-        <!-- 添加自定义菜单 -->
+        <?php endif; ?>
+        <!-- 自定义模式替换全部菜单；自动模式保留分类并追加自定义项 -->
         <?php echo getCustomMenu($this->request->getRequestUrl()); ?>
       </ul>
     </nav>

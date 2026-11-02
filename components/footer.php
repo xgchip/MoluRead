@@ -41,7 +41,7 @@ function generateCopyright($siteCreationDate = '')
     <?php else: ?>
       <div class="footer-left">
         <div class="footer-copyright py-2">
-          <div>© <?php echo generateCopyright($this->options->sitedate); ?> Designed by <a
+          <div>© <?php echo generateCopyright($this->options->sitedate); ?>  <a
               href="<?php $this->options->siteUrl(); ?>" title="<?php $this->options->title() ?>"
               target="_blank"><?php $this->options->title() ?></a> &Iota; <a
               href="<?php echo getSitePath('privacy.html'); ?>" title="<?php $this->options->title() ?>隐私政策"
@@ -53,9 +53,7 @@ function generateCopyright($siteCreationDate = '')
           </div>
           <div></div>
           <div>Powered
-            by <a href="//typecho.org/" title="Typecho" target="_blank">Typecho</a> & <a
-              href="<?php echo getSitePath('harmonyhues.html'); ?>" title="Harmony Hues 主题" target="_self">Harmony
-              Hues</a><?php $this->options->icp(); ?> &Iota;
+            by <a href="//typecho.org/" title="Typecho" target="_blank">Typecho</a> & <span>MoluRead</span><?php $this->options->icp(); ?> &Iota;
             <a href="https://ipv6test.wcode.net/?q=<?php $this->options->siteUrl(); ?>" title="本站支持IPv6访问"
               target='_blank'>本站支持IPv6访问</a> &Iota; <a
               href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" title="CC BY-NC-SA 4.0"
@@ -79,8 +77,8 @@ function generateCopyright($siteCreationDate = '')
           <?php endif; ?>
         </div>
       </div>
-  </div>
 <?php endif; ?>
+  </div>
 </footer>
 <!--手机导航栏-->
 <div id="mobile-nav"></div>
@@ -129,9 +127,9 @@ function generateCopyright($siteCreationDate = '')
 <script type="text/javascript" src="<?php getAssets('assets/js/harmonyhues.min.js?v=' . getVersion()); ?>"></script>
 <script type="text/javascript">
   <?php $this->options->customScript(); ?>
-  console.log("%c © Harmony Hues主题 | Version: <?php echo getVersion(); ?> | https://biibii.cn",
+  console.log("%c 陌阅 MoluRead | Version: <?php echo getVersion(); ?>",
     "color:#000; background: linear-gradient(270deg, #FFB6C1, #FFF0F5, #FFC0CB); padding: 8px 15px; border-radius: 8px");
-  console.log("%c © BIIBII.CN | 内容均为原创或授权转发，请勿盗用",
+  console.log("%c 陌阅 MoluRead | 二次开发：半隐",
     "color:#000; background: linear-gradient(270deg, #87CEFA, #F0F8FF, #87CEEB); padding: 8px 15px; border-radius: 8px");
   console.log("%c页面加载耗时：<?php endCountTime(); ?>",
     "color:#fff; background: linear-gradient(270deg, #986fee, #8695e6, #68b7dd, #18d7d3); padding: 8px 15px; border-radius: 8px"
@@ -214,6 +212,7 @@ $themeVersion = getVersion();
 </script>
 <?php $this->options->customBodyEnd() ?>
 <?php $this->options->zztj(); ?>
+<script src="<?php getAssets('assets/js/tag-cloud.js'); ?>" defer></script>
 </body>
 
 </html>

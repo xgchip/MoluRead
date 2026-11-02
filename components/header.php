@@ -92,6 +92,7 @@ if (! defined('__TYPECHO_ROOT_DIR__')) {
       media="all">
     <script type="text/javascript" src="<?php getAssets('assets/lib/swiper3/swiper-3.4.2.jquery.min.js'); ?>"></script>
   <?php endif; ?>
+  <link rel="stylesheet" href="<?php getAssets('assets/css/reading.css'); ?>">
   <!-- 自定义style -->
   <style>
     <?php $this->options->customStyle();
@@ -100,6 +101,6 @@ if (! defined('__TYPECHO_ROOT_DIR__')) {
   <?php $this->options->customHeadEnd(); ?>
 </head>
 
-<body>
+<body class="<?php echo $this->is('post') ? 'hh-reading-page' : ''; ?>">
   <?php $this->need('components/navbar.php'); ?>
   <div class="nav-fixed"></div>

@@ -200,8 +200,8 @@ $breakpoints: (
     top: 0.25rem;
     right: 0.25rem;
     color: var(--font-color-main-light);
-    animation: spin 8s linear infinite;
-    -webkit-animation: spin 8s linear infinite;
+    animation: moluread-breathe 3s ease-in-out infinite;
+    -webkit-animation: moluread-breathe 3s ease-in-out infinite;
 
     &:hover {
       cursor: pointer;

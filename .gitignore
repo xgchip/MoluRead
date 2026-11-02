@@ -1,0 +1,17 @@
+.DS_Store
+._*
+.idea/
+.vscode/
+node_modules/
+.env
+.env.*
+!.env.example
+*.log
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+config.inc.php
+func.php
+/dist/
+/tmp/

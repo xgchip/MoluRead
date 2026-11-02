@@ -23,6 +23,7 @@ function createAnchor($obj)
     // 匹配h1-h4标签
     $obj = preg_replace_callback('/<h([1-4])(.*?)>(.*?)<\/h\1>/i', function ($obj) use (&$count) {
         $count++;
+        if (preg_match('/\bid\s*=/i', $obj[2])) return $obj[0];
         return '<h' . $obj[1] . $obj[2] . ' id="heading-' .  $count . '">' . $obj[3] . '</h' . $obj[1] . '>';
     }, $obj);
     return $obj;

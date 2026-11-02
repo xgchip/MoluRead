@@ -85,7 +85,7 @@ if (! defined('__TYPECHO_ROOT_DIR__')) {
     ?>
     <!-- 一言 -->
     <div class="hh-widget mt-3">
-        <div class="yiyan-widget">
+        <div class="yiyan-widget" data-quotes-url="<?php echo htmlspecialchars(getAssets('assets/yiyan/yiyan.txt', false), ENT_QUOTES, 'UTF-8'); ?>">
             <div class="yiyan-date p-2 pb-0">
                 <div class="yiyan-date-main d-flex">
                     <p class="yiyan-greet m-0"><?php echo getGreeting(); ?></p>
@@ -95,7 +95,7 @@ if (! defined('__TYPECHO_ROOT_DIR__')) {
                         <span class="yiyan-week"><?php echo $weekText; ?></span>
                     </p>
                 </div>
-                <button type="button" class="yiyan-refresh-btn" title="换一句" onclick="location.reload()">
+                <button type="button" class="yiyan-refresh-btn" title="换一句" aria-label="换一句">
                     <i class="iconfont icon-yuan"></i><span>换一句</span>
                 </button>
             </div>
@@ -104,11 +104,12 @@ if (! defined('__TYPECHO_ROOT_DIR__')) {
                     <img data-original="<?php echo htmlspecialchars((string) $randImg, ENT_QUOTES, 'UTF-8'); ?>"
                         src="<?php getLazyload(); ?>" alt="一言壁纸" class="yiyan-img widget-lazy" />
                 </div>
-                <div class="yiyan-text p-2">
+                <div class="yiyan-text p-2" aria-live="polite" aria-atomic="true">
                     <p class="yiyan-quote m-0" title="<?php echo $yiyanText; ?>"><?php echo $yiyanText; ?></p>
                     <p class="yiyan-author text-right m-0" title="<?php echo $yiyanFrom; ?>">—— <?php echo $yiyanFrom; ?></p>
                 </div>
             </div>
         </div>
     </div>
+<script src="<?php getAssets('assets/js/yiyan.js'); ?>" defer></script>
 <?php endif; ?>

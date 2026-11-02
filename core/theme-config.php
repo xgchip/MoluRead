@@ -22,6 +22,8 @@ function themeConfig($form)
     <link rel="stylesheet" href="<?php getAssets('assets/css/style.min.css') ?>" type="text/css" media="all">
     <link rel="stylesheet" href="<?php getAssets('assets/typecho/config/css/config.min.css') ?>">
     <script src="<?php getAssets('assets/typecho/config/js/config.min.js') ?>" defer></script>
+    <link rel="stylesheet" href="<?php getAssets('assets/typecho/config/css/navigation.css'); ?>">
+    <script src="<?php getAssets('assets/typecho/config/js/navigation.js'); ?>" defer></script>
     <div id="hhc-meta" data-version="<?php echo htmlspecialchars(getVersion(), ENT_QUOTES, 'UTF-8'); ?>" hidden></div>
     <?php
 
@@ -103,7 +105,7 @@ function themeConfig($form)
     $wechatQrCode = new Typecho_Widget_Helper_Form_Element_Text(
         'wechatQrCode',
         NULL,
-        '/usr/themes/HarmonyHues/assets/images/wechatQr.webp',
+        '',
         '微信二维码（必填）',
         '介绍：在这里填入你的微信收款二维码URL地址'
     );
@@ -115,7 +117,7 @@ function themeConfig($form)
     $alipayQrCode = new Typecho_Widget_Helper_Form_Element_Text(
         'alipayQrCode',
         NULL,
-        '/usr/themes/HarmonyHues/assets/images/alipayQr.webp',
+        '',
         '支付宝二维码（必填）',
         '介绍：在这里填入你的支付宝收款二维码URL地址'
     );
@@ -152,6 +154,20 @@ function themeConfig($form)
     $form->addInput($indexLayout->multiMode());
     $indexLayout->setAttribute('class', 'setting-content my-3');
     $indexLayout->setAttribute('data-hhc', 'look');
+
+    // Apply the same page size to home-page queries and pagination on all devices.
+    $homePageSize = new Typecho_Widget_Helper_Form_Element_Text(
+        'homePageSize', NULL, '12', '首页每页文章数',
+        '范围1–48，建议12或18。电脑和手机保持一致；只影响首页及其分页。留空沿用Typecho阅读设置。'
+    );
+    $homePageSize->addRule(function ($value) {
+        if (trim((string) $value) === '') return true;
+        $number = filter_var($value, FILTER_VALIDATE_INT);
+        return $number !== false && $number >= 1 && $number <= 48;
+    }, '请输入1–48之间的整数，或留空沿用阅读设置');
+    $form->addInput($homePageSize);
+    $homePageSize->setAttribute('class', 'setting-content my-3');
+    $homePageSize->setAttribute('data-hhc', 'look');
 
     // 自定义缩略图
     $customThumbnail = new Typecho_Widget_Helper_Form_Element_Textarea(
@@ -190,15 +206,25 @@ function themeConfig($form)
     $svgName->setAttribute('data-hhc', 'look');
     $svgName->setAttribute('data-hhc-mono', '1');
 
+    $navigationMode = new Typecho_Widget_Helper_Form_Element_Select(
+        'navigationMode', array('auto'=>'自动分类导航（追加自定义项）','custom'=>'完全自定义导航'),
+        'auto', '导航菜单模式', '自定义模式可编辑全部菜单，包括首页；自动模式显示首页和分类。'
+    );
+    $form->addInput($navigationMode);
+    $navigationMode->setAttribute('class','setting-content my-3');
+    $navigationMode->setAttribute('data-hhc','nav');
+
     // 自定义导航栏
     $navbarInfo = new Typecho_Widget_Helper_Form_Element_Textarea(
         'navbarInfo',
         NULL,
-        '{"name":"自定义","link":"","target":"_self","sub":[{"name":"子菜单名称","link":"https://www.example.com/xxxx.html","target":"_self"}]}',
-        '导航栏菜单配置（非必填）',
-        '介绍：支持自定义菜单,不支持三级目录，优先分类和独立页面里面找，没有才匹配link<br/>
-    在这里填入JSON格式模板：{name":"菜单名称","link":"https://www.example.com/xxxx.html","target":"_self","sub":[{"name":"子菜单名称","link":"https://www.example.com/xxxx.html","target":"_self"}]}'
+        '',
+        '导航菜单编辑器',
+        '添加、修改和排序菜单，支持二级菜单；链接可填写站内路径或完整https地址。底层保留JSON，旧格式兼容。'
     );
+    $navbarInfo->addRule(function ($value) {
+        try { hhParseNavigation($value); return true; } catch (InvalidArgumentException $e) { return false; }
+    }, '请检查菜单名称、链接和层级；末级菜单必须有链接，最多两级');
     $form->addInput($navbarInfo);
     $navbarInfo->setAttribute('class', 'setting-content my-3');
     $navbarInfo->setAttribute('data-hhc', 'nav');
@@ -222,13 +248,22 @@ function themeConfig($form)
             '1' => '显示文章封面',
             '0' => '不显示文章封面',
         ),
-        '1',
+        '0',
         '文章页面封面图（非必填）',
         '介绍：开启后，有封面（自定义字段 thumb）的文章会在顶部展示封面卡片，并把面包屑、标题、作者、时间、浏览、评论放进取景框内'
     );
     $form->addInput($postCover->multiMode());
     $postCover->setAttribute('class', 'setting-content my-3');
     $postCover->setAttribute('data-hhc', 'nav');
+
+    // Tag cloud: links remain readable with JavaScript disabled or reduced motion.
+    $tagCloudStyle = new Typecho_Widget_Helper_Form_Element_Select(
+        'tagCloudStyle', array('dynamic'=>'动态标签云', 'static'=>'静态标签云'),
+        'dynamic', '标签云样式', '动态模式支持暂停，减少动态效果时自动显示静态标签。'
+    );
+    $form->addInput($tagCloudStyle->multiMode());
+    $tagCloudStyle->setAttribute('class', 'setting-content my-3');
+    $tagCloudStyle->setAttribute('data-hhc', 'home');
 
     // 是否开启goLink外链
     $isGoLink = new Typecho_Widget_Helper_Form_Element_Select(
