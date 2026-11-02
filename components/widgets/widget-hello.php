@@ -21,8 +21,8 @@ if (! defined('__TYPECHO_ROOT_DIR__')) {
         <span class="hello-text"><?php echo $helloTxt; ?></span>
       </div>
       <div class="hello-btn-group">
-        <a href="<?php echo getSitePath('harmonyhues.html'); ?>" class="py-1 px-2 hello-btn-item" title="关于主题"
-          target="_self">@主题</a>
+        <a href="https://github.com/xgchip/MoluRead" class="py-1 px-2 hello-btn-item" title="关于主题"
+          target="_blank" rel="noopener">@主题</a>
         <a href="<?php echo getSitePath('about.html'); ?>" class="py-1 px-2 hello-btn-item" title="关于博主"
           target="_self">@博主</a>
         <a href="<?php echo getSitePath('links.html'); ?>" class="py-1 px-2 hello-btn-item" title="友情链接"

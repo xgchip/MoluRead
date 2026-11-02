@@ -1,13 +1,14 @@
 <?php
 
 /**
- * <ul><li>php 支持：  7.2 ~ 8.x （说明：php 8.x 需要使用 typecho 1.2+ 版本）</li><li>作者博客：<a href="https://www.biibii.cn/" target="_blank">BIIBII.CN</a></li><li>关于主题：<a href="https://www.biibii.cn/harmonyhues.html" target="_blank">HarmonyHues主题</a></li><li>Github：<a href="https://github.com/wugeng20/HarmonyHuesTheme" target="_blank">https://github.com/wugeng20/HarmonyHuesTheme</a></li></ul>
+ * <ul><li>环境：Typecho 1.2+ / PHP 7.4–8.x</li><li>作者网站：<a href="https://www.ee-nav.com/" target="_blank" rel="noopener">陌路之引</a></li><li>主题文档：<a href="https://github.com/xgchip/MoluRead#readme" target="_blank" rel="noopener">MoluRead</a></li><li>GitHub：<a href="https://github.com/xgchip/MoluRead" target="_blank" rel="noopener">xgchip/MoluRead</a></li><li>问题反馈：<a href="https://github.com/xgchip/MoluRead/issues" target="_blank" rel="noopener">Issues</a></li></ul>
  * @package MoluRead — 专注阅读的 Typecho 主题
- * @author 半隐（二次开发）；星语社长（HarmonyHues 原作者）
- * @version 2.1.1
+ * @author 半隐
+ * @version 2.1.2
  * @link https://github.com/xgchip/MoluRead
  */
 
+// Based on HarmonyHues by 星语社长. Source, license and modifications: ATTRIBUTION.md.
 if (! defined('__TYPECHO_ROOT_DIR__')) {
   exit;
 }
