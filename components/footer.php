@@ -53,7 +53,7 @@ function generateCopyright($siteCreationDate = '')
           </div>
           <div></div>
           <div>Powered
-            by <a href="//typecho.org/" title="Typecho" target="_blank">Typecho</a> & <span>MoluRead</span><?php $this->options->icp(); ?> &Iota;
+            by <a href="//typecho.org/" title="Typecho" target="_blank">Typecho</a> & <span>MoluRead</span> &Iota;
             <a href="https://ipv6test.wcode.net/?q=<?php $this->options->siteUrl(); ?>" title="本站支持IPv6访问"
               target='_blank'>本站支持IPv6访问</a> &Iota; <a
               href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" title="CC BY-NC-SA 4.0"
@@ -79,6 +79,9 @@ function generateCopyright($siteCreationDate = '')
       </div>
 <?php endif; ?>
   </div>
+  <?php if (trim((string) $this->options->icp) !== ''): ?>
+    <div class="container mlr-footer-filing" aria-label="网站备案信息"><?php $this->options->icp(); ?></div>
+  <?php endif; ?>
 </footer>
 <!--手机导航栏-->
 <div id="mobile-nav"></div>

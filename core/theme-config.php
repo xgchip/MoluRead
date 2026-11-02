@@ -569,7 +569,7 @@ function themeConfig($form)
         NULL,
         NULL,
         '备案HTML内容（非必填）',
-        '介绍：在这里填入你的网站备案HTML内容， 注意：底部footer内容会覆盖此内容，只适合默认的底部内容，示例： &Iota; [a href="https://beian.miit.gov.cn/" target="_blank"]ICP备xxxx号-1[/a]，[]符号改为<>'
+        '介绍：备案信息独立显示在页脚下方，自定义底部footer内容不会覆盖它；留空则不显示。请勿在自定义页脚重复填写。示例：[a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer"]ICP备xxxx号-1[/a]，[]符号改为<>'
     );
     $form->addInput($icp);
     $icp->setAttribute('class', 'setting-content my-3');
