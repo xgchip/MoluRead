@@ -765,8 +765,10 @@ $(document).ready(function () {
       autoplayDisableOnInteraction: false, // 用户操作swiper之后，是否禁止autoplay。默认为true：停止。
       pagination: '.swiper-pagination', // 分页器
       paginationClickable: true, // 分页器可点击
-      prevButton: '.swiper-button-prev', // 上一页
-      nextButton: '.swiper-button-next', // 下一页
+      paginationElement: 'button',
+      paginationBulletRender: function (swiper, index, className) {
+        return '<button type="button" class="' + className + '" aria-label="切换到第 ' + (index + 1) + ' 张"></button>';
+      },
       roundLengths: true, // 将slide的宽和高取整，以防止某些分辨率的屏幕上出现模糊
       parallax: true, // 开启视差效果
       lazyLoading: true, // 懒加载
