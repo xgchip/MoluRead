@@ -126,3 +126,6 @@ a.mlr-post-nav-item:focus-visible { outline:2px solid var(--color-primary-light-
 .swiper-widget .mlr-carousel-dots .swiper-pagination-bullet:focus-visible { outline:2px solid #fff; outline-offset:-2px; }
 @media(max-width:575.98px) { .swiper-widget .swiper-container > .mlr-carousel-dots { bottom:10px; } }
 @media(prefers-reduced-motion:reduce) { .swiper-widget .mlr-carousel-dots .swiper-pagination-bullet::before { transition:none; } }
+
+.main-sidebar .mlr-sidebar-item + .mlr-sidebar-item { margin-top:16px; }
+.main-sidebar .mlr-sidebar-item > .hh-widget { margin-top:0 !important; }

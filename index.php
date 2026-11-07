@@ -4,7 +4,7 @@
  * <ul><li>环境：Typecho 1.2+ / PHP 7.4–8.x</li><li>作者网站：<a href="https://www.ee-nav.com/" target="_blank" rel="noopener">陌路之引</a></li><li>主题文档：<a href="https://github.com/xgchip/MoluRead#readme" target="_blank" rel="noopener">MoluRead</a></li><li>GitHub：<a href="https://github.com/xgchip/MoluRead" target="_blank" rel="noopener">xgchip/MoluRead</a></li><li>问题反馈：<a href="https://github.com/xgchip/MoluRead/issues" target="_blank" rel="noopener">Issues</a></li></ul>
  * @package MoluRead — 专注阅读的 Typecho 主题
  * @author 半隐
- * @version 2.1.4
+ * @version 2.1.5
  * @link https://github.com/xgchip/MoluRead
  */
 

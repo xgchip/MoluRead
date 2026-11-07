@@ -24,6 +24,8 @@ function themeConfig($form)
     <script src="<?php getAssets('assets/typecho/config/js/config.min.js') ?>" defer></script>
     <link rel="stylesheet" href="<?php getAssets('assets/typecho/config/css/navigation.css'); ?>">
     <script src="<?php getAssets('assets/typecho/config/js/navigation.js'); ?>" defer></script>
+    <script src="<?php getAssets('assets/typecho/config/js/sidebar-order.js'); ?>" defer></script>
+    <link rel="stylesheet" href="<?php getAssets('assets/typecho/config/css/sidebar-order.css'); ?>">
     <div id="hhc-meta" data-version="<?php echo htmlspecialchars(getVersion(), ENT_QUOTES, 'UTF-8'); ?>" hidden></div>
     <?php
 
@@ -344,13 +346,24 @@ function themeConfig($form)
         ),
         array('ShowAboutMe', 'ShowSidebarYiyan', 'ShowHotPosts'),
         '侧边栏显示（非必填）',
-        '介绍：侧边栏模块，默认显示博主信息和最新评论'
+        '介绍：勾选需要显示的模块；排列顺序在下方“侧边栏排序”中设置。文章页显示博主信息、热门文章、标签，目录保留在最后。'
     );
     $form->addInput($sidebarBlock->multiMode());
     $sidebarBlock->setAttribute('class', 'setting-content my-3');
     $sidebarBlock->setAttribute('data-hhc', 'home');
 
-    // 侧边栏-博客路牌
+$sidebarOrder = new Typecho_Widget_Helper_Form_Element_Text(
+    'sidebarOrder', NULL,
+    'ShowAboutMe,ShowSidebarYiyan,ShowHotPosts,ShowSidebarComments,ShowBlogSignage,ShowDevilEyes,ShowTags',
+    '侧边栏排序',
+    '拖动模块调整顺序，也可使用上下按钮。未勾选的模块不会显示，排序不会改变勾选状态；点击页面保存按钮后生效。'
+);
+$form->addInput($sidebarOrder);
+$sidebarOrder->setAttribute('class', 'setting-content my-3');
+$sidebarOrder->setAttribute('data-hhc', 'home');
+
+// 侧边栏-博客路牌
+
     $blogSignageText = new Typecho_Widget_Helper_Form_Element_Text(
         'blogSignageText',
         NULL,
