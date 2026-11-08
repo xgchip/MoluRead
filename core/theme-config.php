@@ -13,6 +13,15 @@ if (! defined('__TYPECHO_ROOT_DIR__')) {
 ?>
 <?php
 // 主题外观设置
+// Keep the original option key and accept previously saved comma-separated IDs.
+class MoluReadCategoryCheckbox extends Typecho_Widget_Helper_Form_Element_Checkbox
+{
+    protected function inputValue($value)
+    {
+        parent::inputValue(moluReadExcludedCategoryIds($value));
+    }
+}
+
 function themeConfig($form)
 {
     // 导入备份
@@ -231,17 +240,24 @@ function themeConfig($form)
     $navbarInfo->setAttribute('class', 'setting-content my-3');
     $navbarInfo->setAttribute('data-hhc', 'nav');
 
-    // 首页不显示分类文章
-    $hideCategory = new Typecho_Widget_Helper_Form_Element_Text(
+    // 首页不显示分类文章：使用数据库分类名称，不需要手填ID。
+    $categoryOptions = array();
+    $categoryDb = Typecho_Db::get();
+    foreach ($categoryDb->fetchAll($categoryDb->select('mid', 'name', 'parent')->from('table.metas')
+        ->where('type = ?', 'category')->order('order', Typecho_Db::SORT_ASC)) as $category) {
+        $categoryOptions[(int) $category['mid']] = htmlspecialchars($category['name'], ENT_QUOTES, 'UTF-8')
+            . '（ID: ' . (int) $category['mid'] . '）';
+    }
+    $hideCategory = new MoluReadCategoryCheckbox(
         'hideCategory',
-        NULL,
-        NULL,
-        '首页隐藏分类（非必填）',
-        '介绍：填写需要隐藏的分类的mid，首页文章列表将不显示分类下的文章，请以半角逗号分隔，例如：1,2,3'
+        $categoryOptions,
+        array(),
+        '首页排除分类',
+        '勾选不希望出现在首页及首页分页中的分类，保存后生效；不勾选则全部显示。文章只要属于任一勾选分类即被排除，置顶文章也遵循此规则。子分类需单独勾选；分类页、搜索和文章链接不受影响。'
     );
     $form->addInput($hideCategory);
     $hideCategory->setAttribute('class', 'setting-content my-3');
-    $hideCategory->setAttribute('data-hhc', 'nav');
+    $hideCategory->setAttribute('data-hhc', 'look');
 
     // 文章页面封面图
     $postCover = new Typecho_Widget_Helper_Form_Element_Select(

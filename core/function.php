@@ -121,6 +121,14 @@ function ensureViewsColumn()
  * @param  Typecho_Widget_Helper_Layout $self
  * @return void
  */
+function moluReadExcludedCategoryIds($value)
+{
+    $values = is_array($value) ? $value : preg_split('/[,，\s]+/u', (string) $value, -1, PREG_SPLIT_NO_EMPTY);
+    return array_values(array_unique(array_filter(array_map(function ($id) {
+        return ctype_digit((string) $id) && (int) $id > 0 ? (int) $id : 0;
+    }, $values))));
+}
+
 function themeInit($self)
 {
     $options = Helper::options();

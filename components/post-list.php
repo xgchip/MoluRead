@@ -15,7 +15,7 @@ if (! defined('__TYPECHO_ROOT_DIR__')) {
 /**
  * 文章列表
  */
-$hiddenCategoryIds = $this->options->hideCategory ?? ''; // 要隐藏的分类ID，逗号分隔
+$hiddenMids = moluReadExcludedCategoryIds($this->options->hideCategory ?? null);
 
 // 判断是否有置顶文章函数（static 缓存 + function_exists 防止重复 include 时重定义）
 if (! function_exists('hasArticleTop')) {
@@ -42,7 +42,7 @@ if (! function_exists('hasArticleTop')) {
 $isArticleTop = hasArticleTop();
 
 // 仅在首页（含 front 归档首页）且启用了置顶或隐藏分类时执行
-$hasCustomQueue = $isArticleTop || trim((string) $hiddenCategoryIds) !== '';
+$hasCustomQueue = $isArticleTop || !empty($hiddenMids);
 
 if ($hasCustomQueue && ($this->is('index') || $this->is('front'))) {
   // 获取数据库对象
@@ -51,9 +51,6 @@ if ($hasCustomQueue && ($this->is('index') || $this->is('front'))) {
   $adjustedPageSize = $this->parameter->pageSize;
   // 需要移除的文章Cid
   $hiddenPostCidArray = array();
-
-  // 隐藏分类ID（只保留数字，避免非法值拼进 SQL）
-  $hiddenMids = array_filter(array_map('intval', explode(',', (string) $hiddenCategoryIds)));
 
   // 隐藏分类下的所有文章ID
   if (!empty($hiddenMids)) {
@@ -72,7 +69,14 @@ if ($hasCustomQueue && ($this->is('index') || $this->is('front'))) {
   // 统一构造查询，保证列表与总数口径一致
   $buildPostQuery = function ($select) use ($db, $isArticleTop, $hiddenPostCidArray, $userId) {
     $query = $db->select($select)->from('table.contents')
-      ->where('table.contents.type = ? AND table.contents.status = ? AND table.contents.created < ?', 'post', 'publish', time());
+      ->where('table.contents.type = ?', 'post');
+
+    // Group visibility before category exclusions so private posts cannot bypass them.
+    if ($userId) {
+      $query->where('((table.contents.status = ? AND table.contents.created < ?) OR (table.contents.authorId = ? AND table.contents.status = ?))', 'publish', time(), $userId, 'private');
+    } else {
+      $query->where('table.contents.status = ? AND table.contents.created < ?', 'publish', time());
+    }
 
     // 置顶的文章
     if (!empty($isArticleTop)) {
@@ -82,10 +86,6 @@ if ($hasCustomQueue && ($this->is('index') || $this->is('front'))) {
     // 隐藏分类的文章
     if (!empty($hiddenPostCidArray)) {
       $query->where('table.contents.cid NOT IN (' . implode(',', array_map('intval', $hiddenPostCidArray)) . ')');
-    }
-
-    if ($userId) {
-      $query->orWhere('authorId = ? AND status = ?', $userId, 'private');
     }
 
     return $query;
