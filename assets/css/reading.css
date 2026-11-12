@@ -129,3 +129,189 @@ a.mlr-post-nav-item:focus-visible { outline:2px solid var(--color-primary-light-
 
 .main-sidebar .mlr-sidebar-item + .mlr-sidebar-item { margin-top:16px; }
 .main-sidebar .mlr-sidebar-item > .hh-widget { margin-top:0 !important; }
+
+/* ===== 暗色阅读配色 · 2026-11-12 =====
+   全部规则只在 html[data-theme="dark"] 下生效；
+   默认浅色模式完全走主题原生样式，不受本段影响。
+   恢复方式：还原 reading.css 备份即可。 */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-primary: #43E1FF;
+  --color-primary-dark-1: #2AC3E0;
+  --color-primary-dark-2: #1B9FC0;
+  --color-primary-dark-3: #127B98;
+  --color-primary-light-1: #5FD9F5;
+  --color-primary-light-2: #8AE6FA;
+  --color-primary-light-3: #B0EFFD;
+  --color-primary-light-4: #122E3B;
+  --color-primary-light-5: #0E2B38;
+  --bg-color-main: #0F1721;
+  --bg-color-main-dark: #06090E;
+  --bg-color-body: #06090E;
+  --bg-color-primary: #0C141E;
+  --bg-color-secondary: #141E29;
+  --overlay-color-light-1: rgba(255,255,255,.035);
+  --overlay-color-light-2: rgba(255,255,255,.06);
+  --overlay-color-light-3: rgba(255,255,255,.09);
+  --overlay-color-light-4: rgba(255,255,255,.13);
+  --overlay-color-light-5: rgba(255,255,255,.04);
+  --overlay-color-light-8: rgba(255,255,255,.10);
+  --overlay-color-dark-1: rgba(0,0,0,.34);
+  --overlay-color-dark-2: rgba(0,0,0,.48);
+  --overlay-color-dark-3: rgba(0,0,0,.60);
+  --overlay-color-dark-4: rgba(0,0,0,.72);
+  --overlay-color-dark-5: rgba(0,0,0,.84);
+  --font-color-main: #F0F5FB;
+  --font-color-main-light: #9BAEC3;
+  --font-color-main-transparent: rgba(240,245,251,.72);
+  --font-color-muted: #74889E;
+  --border-color-main: #253444;
+  --border-radius-base: 14px;
+  --border-radius-small: 8px;
+  --border-solid-main: 1px solid #253444;
+  --border-solid-small: 1px solid #253444;
+  --color-blue-gray-medium: #43E1FF;
+  --color-blue-gray-medium-light: #A478FF;
+  --backdrop-filter-main: saturate(150%) blur(18px);
+  --gradient-primary-transparent: linear-gradient(0deg,rgba(67,225,255,.10),transparent);
+  --gradient-0deg: linear-gradient(0deg,#0F1721,#141E29);
+  --gradient-45deg: linear-gradient(45deg,#0F1721,#141E29);
+  --widget-bg-gradient: linear-gradient(-45deg,#141E29,#0F1721);
+  --shadow-box-main: 0 16px 40px rgba(0,0,0,.48), inset 0 1px 0 rgba(255,255,255,.04);
+  --shadow-box-small: 0 8px 22px rgba(0,0,0,.42);
+  --shadow-box-hover: 0 20px 46px rgba(0,0,0,.60), 0 0 26px rgba(67,225,255,.12);
+  --shadow-nav: 0 6px 24px rgba(0,0,0,.5);
+  --shadow-hover-nav: 0 6px 24px rgba(0,0,0,.5);
+  --shadow-inset-box: inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+/* 背景：近黑 + 青紫径向光 + 极淡网格，与首页 / 工具站一致 */
+:root[data-theme="dark"] body {
+  color: #F0F5FB !important;
+  background-color: #06090E !important;
+  background-image:
+    radial-gradient(1100px 660px at 82% 0%, #0E1A28 0%, transparent 62%),
+    radial-gradient(860px 580px at 4% 98%, #120E24 0%, transparent 58%),
+    linear-gradient(to right, rgba(255,255,255,.022) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.022) 1px, transparent 1px) !important;
+  background-size: auto, auto, 80px 80px, 80px 80px !important;
+  background-attachment: fixed !important;
+}
+:root[data-theme="dark"] img { filter: none !important; }
+
+/* 导航 */
+:root[data-theme="dark"] #navbar, :root[data-theme="dark"] .navbar {
+  background: rgba(11,18,27,.82) !important;
+  border-bottom: 1px solid rgba(255,255,255,.09) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/* Logo 使用后台设置的深色版本，保留自定义图片原色。 */
+:root[data-theme="dark"] .nav-menu .nav-a, :root[data-theme="dark"] .navbar .nav-a, :root[data-theme="dark"] .navbar-logo, :root[data-theme="dark"] .nav-a { color: #D6E6F4 !important; }
+:root[data-theme="dark"] .nav-menu .nav-a:hover, :root[data-theme="dark"] .nav-menu .nav-item.active > .nav-a, :root[data-theme="dark"] .nav-a.active {
+  color: #43E1FF !important;
+}
+:root[data-theme="dark"] .sub-menu {
+  background: rgba(15,23,33,.97) !important;
+  border: 1px solid #253444 !important;
+  box-shadow: 0 20px 44px rgba(0,0,0,.6) !important;
+}
+:root[data-theme="dark"] .sub-menu a { color: #9BAEC3 !important; }
+:root[data-theme="dark"] .sub-menu a:hover { color: #43E1FF !important; }
+
+/* 卡片 / 面板 / 组件：深色玻璃 */
+:root[data-theme="dark"] .card, :root[data-theme="dark"] .hh-widget, :root[data-theme="dark"] .post-item, :root[data-theme="dark"] .widget-content, :root[data-theme="dark"] .author-content, :root[data-theme="dark"] .mlr-post-nav-item, :root[data-theme="dark"] .page-link, :root[data-theme="dark"] .breadcrumb, :root[data-theme="dark"] .comment-item, :root[data-theme="dark"] .post-content, :root[data-theme="dark"] .yiyan-widget, :root[data-theme="dark"] .search-box, :root[data-theme="dark"] .links-card, :root[data-theme="dark"] .pagination .page-item {
+  background: linear-gradient(160deg, rgba(255,255,255,.055), rgba(255,255,255,.018)) !important;
+  border: 1px solid rgba(255,255,255,.09) !important;
+  box-shadow: 0 12px 32px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.04) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #F0F5FB !important;
+}
+:root[data-theme="dark"] .post-item:hover, :root[data-theme="dark"] .card:hover, :root[data-theme="dark"] .hh-widget:hover {
+  border-color: rgba(67,225,255,.5) !important;
+  box-shadow: 0 20px 44px rgba(0,0,0,.55), 0 0 26px rgba(67,225,255,.12) !important;
+}
+
+/* 文章封面多为白底技术图，加深色内衬与圆角，避免看起来像「白色卡片」 */
+:root[data-theme="dark"] .post-cover, :root[data-theme="dark"] .yiyan-cover, :root[data-theme="dark"] .swiper-slide {
+  background: #0B121B !important;
+  border-radius: 12px;
+  overflow: hidden;
+}
+:root[data-theme="dark"] .post-cover { padding: 7px 7px 0; }
+:root[data-theme="dark"] .post-cover img { border-radius: 8px; }
+
+/* 轮播懒加载占位图 loadimg.webp 是浅灰，暗色下会露白块：未加载完成先压暗，加载完自动恢复原色 */
+:root[data-theme="dark"] .swiper-slide img { background: #0B121B; }
+:root[data-theme="dark"] .swiper-slide img.swiper-lazy:not(.swiper-lazy-loaded) { filter: brightness(.14) saturate(.3) !important; }
+:root[data-theme="dark"] .widget-title, :root[data-theme="dark"] .post-title, :root[data-theme="dark"] .post-head, :root[data-theme="dark"] .card-title, :root[data-theme="dark"] h1, :root[data-theme="dark"] h2, :root[data-theme="dark"] h3, :root[data-theme="dark"] h4, :root[data-theme="dark"] h5, :root[data-theme="dark"] h6 { color: #F0F5FB !important; }
+:root[data-theme="dark"] .post-description, :root[data-theme="dark"] .post-meta, :root[data-theme="dark"] .post-meta-item, :root[data-theme="dark"] .author-name, :root[data-theme="dark"] .hotposts-title, :root[data-theme="dark"] .newreply-text, :root[data-theme="dark"] .yiyan-text, :root[data-theme="dark"] .widget-content, :root[data-theme="dark"] .breadcrumb, :root[data-theme="dark"] .text-muted { color: #9BAEC3 !important; }
+:root[data-theme="dark"] .widget-title-top-bg, :root[data-theme="dark"] .card-title-top-bg {
+  background: linear-gradient(90deg,#43E1FF,#A478FF) !important;
+}
+:root[data-theme="dark"] .hotposts-number { background: rgba(67,225,255,.12) !important; color: #5FD9F5 !important; }
+:root[data-theme="dark"] .hh-tag-cloud a { background: rgba(255,255,255,.04) !important; border-color: #253444 !important; color: #9BAEC3 !important; }
+:root[data-theme="dark"] .hh-tag-cloud a:hover { color: #43E1FF !important; border-color: #43E1FF !important; }
+:root[data-theme="dark"] .page-link { color: #9BAEC3 !important; }
+
+/* 主题原规则 .pagination .page-item.active .page-link 带 !important 且权重更高，必须同权重覆盖 */
+:root[data-theme="dark"] .pagination .page-item.active .page-link, :root[data-theme="dark"] .pagination .page-item:hover .page-link, :root[data-theme="dark"] .pagination .page-link:hover {
+  background: linear-gradient(120deg,#43E1FF,#A478FF) !important;
+  color: #06101A !important;
+  border-color: transparent !important;
+  box-shadow: 0 0 18px rgba(67,225,255,.25) !important;
+}
+:root[data-theme="dark"] a, :root[data-theme="dark"] a:link, :root[data-theme="dark"] a:visited { color: #D6E6F4; }
+:root[data-theme="dark"] a:hover { color: #43E1FF !important; }
+
+/* 表单 / 代码 / 引用 / 表格 */
+:root[data-theme="dark"] input, :root[data-theme="dark"] textarea, :root[data-theme="dark"] select {
+  background: #0C141E !important;
+  border: 1px solid #253444 !important;
+  color: #F0F5FB !important;
+  box-shadow: none !important;
+}
+:root[data-theme="dark"] input::placeholder, :root[data-theme="dark"] textarea::placeholder { color: #74889E !important; }
+:root[data-theme="dark"] button, :root[data-theme="dark"] .btn { color: #F0F5FB !important; }
+:root[data-theme="dark"] .btn-primary, :root[data-theme="dark"] .btn:not(.btn-link) {
+  background: linear-gradient(120deg,#43E1FF,#A478FF) !important;
+  border-color: transparent !important;
+  color: #06101A !important;
+}
+:root[data-theme="dark"] ::-webkit-scrollbar-track { background: #0C141E !important; }
+:root[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #2A3D50 !important; border-radius: 10px; }
+
+/* 文章正文（markdown-body / post-content） */
+:root[data-theme="dark"] .post-content, :root[data-theme="dark"] .markdown-body { color: #D6E6F4 !important; }
+:root[data-theme="dark"] .post-content h1, :root[data-theme="dark"] .post-content h2, :root[data-theme="dark"] .post-content h3, :root[data-theme="dark"] .markdown-body h1, :root[data-theme="dark"] .markdown-body h2, :root[data-theme="dark"] .markdown-body h3 { color: #F0F5FB !important; }
+:root[data-theme="dark"] .post-content h2::before, :root[data-theme="dark"] .markdown-body h2::before { background: #43E1FF !important; }
+:root[data-theme="dark"] .post-content pre, :root[data-theme="dark"] .markdown-body pre, :root[data-theme="dark"] pre {
+  background: #0A111B !important;
+  border: 1px solid #253444 !important;
+  color: #C9DCF0 !important;
+}
+:root[data-theme="dark"] :not(pre) > code {
+  background: #0E2B38 !important;
+  color: #8AE6FA !important;
+  border-radius: 5px;
+  padding: 2px 6px;
+}
+:root[data-theme="dark"] .post-content blockquote, :root[data-theme="dark"] .markdown-body blockquote {
+  background: rgba(67,225,255,.06) !important;
+  border-left: 3px solid #43E1FF !important;
+  color: #9BAEC3 !important;
+}
+:root[data-theme="dark"] .post-content table, :root[data-theme="dark"] .markdown-body table, :root[data-theme="dark"] .post-content th, :root[data-theme="dark"] .markdown-body th, :root[data-theme="dark"] .post-content td, :root[data-theme="dark"] .markdown-body td { border-color: #253444 !important; }
+:root[data-theme="dark"] .post-content th, :root[data-theme="dark"] .markdown-body th { background: #141E29 !important; }
+:root[data-theme="dark"] .post-content img, :root[data-theme="dark"] .markdown-body img { border-radius: 8px; }
+
+/* 页脚 */
+:root[data-theme="dark"] .footer, :root[data-theme="dark"] footer {
+  background: rgba(6,9,14,.72) !important;
+  border-top: 1px solid rgba(255,255,255,.08) !important;
+  color: #74889E !important;
+}
+:root[data-theme="dark"] .footer a, :root[data-theme="dark"] footer a { color: #9BAEC3 !important; }
+:root[data-theme="dark"] .footer a:hover, :root[data-theme="dark"] footer a:hover { color: #43E1FF !important; }
